@@ -9,6 +9,7 @@ body, #root {
   background-color: #f9f9f9;
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 30px; /* un poco de espacio arriba */
+  overflow-y: auto; /* habilita el scroll vertical si lo necesitas */
 }
 
 /* Contenedor principal que envuelve las rutas */
@@ -16,6 +17,8 @@ body, #root {
   max-width: 700px;
   width: 100%;
   padding: 20px;
+  padding-bottom: 100px; /* <--- espacio extra para que el contenido no quede oculto debajo del menú */
+  margin: 0 auto; /* Centra el contenedor */
   background: cadetblue;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);

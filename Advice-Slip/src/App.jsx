@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import Aleatorio from './components/aleatorios';
-import Detalle from './components/detalle';
 import Filtros from './components/filtros';
 import Favoritos from './components/favoritos';
 import Listar from './components/listar';
@@ -37,8 +36,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/listar" />} />
           <Route path="/aleatorios" element={<Aleatorio />} />
-          <Route path="/detalle" element={<Detalle />} />
-          <Route path="/detalle/:name" element={<Detalle />} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/listar" element={<Filtros />} />
           <Route path="/original" element={<Original />} />

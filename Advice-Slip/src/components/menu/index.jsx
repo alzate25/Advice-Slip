@@ -7,7 +7,6 @@ function Menu() {
   return (
     <nav className='c-menu'>
       <Link to="./aleatorios">Aleatorio</Link>
-      <Link to="./detalle">Detalle</Link>
       <Link to="./listar">Listar</Link>
       <Link to="./original">Original</Link>
       <Link to="./usuario">Usuario</Link>

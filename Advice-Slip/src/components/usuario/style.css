@@ -1,0 +1,82 @@
+/* Contenedor principal para Usuario */
+.usuario-container {
+  max-width: 400px;
+  width: 100%;
+  background: cadetblue;
+  padding: 20px 30px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra todo horizontalmente */
+  gap: 1.2rem; /* Espacio vertical entre elementos */
+  color: #f9f9f9;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Inputs centrados y tamaño */
+.usuario-container input[type="text"],
+.usuario-container input[type="email"],
+.usuario-container input[type="password"] {
+  width: 100%;
+  max-width: 350px;
+  margin-right: 0;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: cadetblue;
+  background-color: #f9f9f9;
+  outline: none;
+  text-align: center; /* <-- Esto centra el texto dentro del input */
+}
+
+
+.usuario-container input::placeholder {
+  color: cadetblue;
+  opacity: 0.8;
+}
+
+/* Botones en fila con espacio entre ellos */
+.usuario-container .botones {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  max-width: 350px;
+  justify-content: center;
+}
+
+/* Botones estilo */
+.usuario-container button {
+  flex: 1;
+  padding: 10px 0;
+  background-color: #f9f9f9;
+  color: cadetblue;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.usuario-container button:hover {
+  background-color: #5a9ca8;
+  color: #f9f9f9;
+}
+
+/* Mensajes centrados */
+.usuario-container p.message {
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0;
+  color: #f9f9f9;
+}
+
+/* Título centrado */
+.usuario-container h2 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
