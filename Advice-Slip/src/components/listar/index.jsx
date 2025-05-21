@@ -1,65 +1,82 @@
-import { useState } from "react";
-import { searchAdvice, getRandomAdvice } from "../../services/api"; // asegúrate de tener este archivo
+import React, { useState } from "react";
 
-function Listar() {
+function Listar({ consejos, onSearch, onAgregarFavorito, onQuitarFavorito, favoritos = [] }) {
   const [busqueda, setBusqueda] = useState('');
-  const [resultados, setResultados] = useState([]);
-  const [mensaje, setMensaje] = useState('');
-  const [favoritos, setFavoritos] = useState(() => {
-    const almacenados = localStorage.getItem('favoritos');
-    return almacenados ? JSON.parse(almacenados) : [];
-  });
-  
-  const agregarAFavoritos = (consejo) => {
-    const yaExiste = favoritos.some(fav => fav.id === consejo.id);
-    if (!yaExiste) {
-      const nuevosFavoritos = [...favoritos, consejo];
-      setFavoritos(nuevosFavoritos);
-      localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos));
-    }
+  const keywords = ['life', 'love', 'money', 'success', 'happiness'];
+
+  const handleInputChange = (e) => {
+    setBusqueda(e.target.value);
   };
-  
-  const handleSearch = async () => {
-    if (busqueda.trim().length < 3) {
-      setMensaje("Escribe al menos 3 caracteres para buscar.");
-      return;
-    }
 
-    const resultadosBusqueda = await searchAdvice(busqueda);
-    if (resultadosBusqueda.length === 0) {
-      setMensaje("No se encontraron consejos.");
+  const handleSearchClick = () => {
+    onSearch(busqueda);
+  };
+
+  const handleKeywordClick = (keyword) => {
+    setBusqueda(keyword);
+    onSearch(keyword);
+  };
+
+  const esFavorito = (id) => favoritos.some(fav => fav.id === id);
+
+  const toggleFavorito = (item) => {
+    if (esFavorito(item.id)) {
+      onQuitarFavorito(item.id);
     } else {
-      setMensaje('');
+      onAgregarFavorito(item);
     }
-
-    setResultados(resultadosBusqueda);
   };
 
   return (
-    <>
+    <div>
       <input
         type="text"
         placeholder="Buscar consejo (en inglés)"
         value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
-        className="c-buscador"
+        onChange={handleInputChange}
       />
-      <button onClick={handleSearch}>Buscar</button>
+      <button onClick={handleSearchClick}>Buscar</button>
 
-      {mensaje && <p>{mensaje}</p>}
-
-      <section className='c-lista'>
-        {resultados.map((item, index) => (
-        <div className='c-lista-consejo' key={index}>
-            <p>{item.advice}</p>
-            <button onClick={() => agregarAFavoritos(item)}>
-            Agregar a favoritos
-            </button>
-        </div>
+      <div style={{ margin: '10px 0' }}>
+        {keywords.map((keyword) => (
+          <button
+            key={keyword}
+            onClick={() => handleKeywordClick(keyword)}
+            style={{ marginRight: 5 }}
+          >
+            {keyword}
+          </button>
         ))}
+      </div>
 
-      </section>
-    </>
+      {!consejos || consejos.length === 0 ? (
+        <p>No hay consejos para mostrar.</p>
+      ) : (
+        <ul>
+          {consejos.map((item) => (
+            <li key={item.id} style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+              <span>{item.advice}</span>
+              <span
+                onClick={() => toggleFavorito(item)}
+                style={{
+                  cursor: 'pointer',
+                  marginLeft: 10,
+                  fontSize: '1.5rem',
+                  userSelect: 'none',
+                  color: esFavorito(item.id) ? 'white' : 'gray',
+                  textShadow: esFavorito(item.id) ? '0 0 5px red' : 'none',
+                  transition: 'color 0.3s ease',
+                }}
+                role="button"
+                aria-label={esFavorito(item.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+              >
+                ❤️
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 

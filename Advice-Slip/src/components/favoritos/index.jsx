@@ -1,26 +1,48 @@
-import './style.css'
+import React from 'react';
 
-import { useEffect, useState } from 'react';
-
-function Favoritos() {
-  const [favoritos, setFavoritos] = useState([]);
-
-  useEffect(() => {
-    const almacenados = localStorage.getItem('favoritos');
-    if (almacenados) {
-      setFavoritos(JSON.parse(almacenados));
-    }
-  }, []);
+function Favoritos({ favoritos, onQuitarFavorito }) {
+  if (!favoritos || favoritos.length === 0) {
+    return <p>No tienes consejos favoritos.</p>;
+  }
 
   return (
-    <section className='c-lista'>
-      <h2>Consejos Favoritos</h2>
-      {favoritos.map((item, index) => (
-        <div key={index} className='c-lista-consejo'>
-          <p>{item.advice}</p>
-        </div>
+    <ul>
+      {favoritos.map((item) => (
+        <li
+          key={item.id}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: 10,
+            justifyContent: 'space-between',
+            padding: '5px 10px',
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            background: '#222',
+            color: '#fff',
+          }}
+        >
+          <span>{item.advice}</span>
+          <span
+            onClick={() => onQuitarFavorito(item.id)}
+            style={{
+              cursor: 'pointer',
+              marginLeft: 10,
+              fontSize: '1.5rem',
+              userSelect: 'none',
+              color: 'white',
+              textShadow: '0 0 5px red',
+              transition: 'transform 0.2s ease',
+            }}
+            role="button"
+            aria-label="Quitar de favoritos"
+            title="Quitar de favoritos"
+          >
+            ❤️
+          </span>
+        </li>
       ))}
-    </section>
+    </ul>
   );
 }
 
